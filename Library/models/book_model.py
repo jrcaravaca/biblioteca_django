@@ -20,5 +20,5 @@ class Book(models.Model):
         return self.cantidad <= 0
     
     def __str__(self):
-        status = ["SIN STOCK"] if self.is_out_of_stock else f"{self.cantidad} uds"
+        status = ["SIN STOCK"] if self.out_of_stock else f"{self.cantidad} uds"
         return f"{self.title} - {status}"
