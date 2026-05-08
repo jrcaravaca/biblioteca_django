@@ -13,7 +13,7 @@ class Book(models.Model):
     publication_date = models.DateField()
     isbn = models.CharField(max_length=13, unique=True) 
     cantidad = models.PositiveIntegerField('Cantidad Disponible', default=1)
-    frontpage = models.ImageField('Portada', upload_to='images/portadas', blank=True, null=True)
+    frontpage = models.ImageField('Portada', upload_to='books/covers/', blank=True, null=True)
 
     @property
     def out_of_stock(self):
