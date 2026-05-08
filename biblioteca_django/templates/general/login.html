@@ -1,0 +1,22 @@
+{% extends "general/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Bienvenido a nuestro InstaConquer{% endblock %}
+{% block page_title %}Bienvenido a nuestra página {% endblock %}
+
+{% block page_content %}
+    <div class="container">
+        {% comment %} {% include "_includes/_messages.html" %}  {% endcomment %}
+        <h1 class="text-center text-3xl pt-4">Iniciar Sesión</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-sms-6">
+                    {{ form.username|as_crispy_field}}
+                    {{ form.password|as_crispy_field}}
+                </div>
+                <button class="bg-[#8C729A] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
