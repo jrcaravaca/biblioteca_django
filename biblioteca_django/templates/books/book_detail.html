@@ -1,0 +1,20 @@
+{% extends "general/layout.html" %} 
+{% block head_title %} Biblioteca - {{book.title}} {% endblock %} 
+
+{% block page_content %}
+    <h2 class="text-[2rem] text-center pb-4 pt-4">{{ book.title }}</h2>
+    <section class="flex justify-center gap-4">
+        <img class="w-55 h-75"src=" {{ book.frontpage.url }}" alt={{ book.title }}">
+        <article>
+            <hr>
+            <b>Autor: </b> {{ book.author.first.name }} {{ book.author.first.last_name }} </p>
+            <p><b>Genero: </b> {{ book.genre }}</p>
+            <p><b>Editorial:</b> {{ book.editorial}}</p>
+            <p><b>Fecha de Publicación:</b> {{ book.publication_date}}</p>
+            <p><b>ISBN:</b> {{ book.isbn }}</p>
+            <hr>
+            <p class="w-200 mt-2">{{ book.synopsis }}</p>
+        </article>
+    </section>
+    
+{% endblock %}
