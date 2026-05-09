@@ -26,14 +26,20 @@ class LoginView(FormView):
     form_class = LoginForm
     
     def form_valid( self, form): 
-         usuario = form.cleaned_data.get('username')
-         password = form.cleaned_data.get('password')
-         user = authenticate(username=usuario, password=password)
+        usuario = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=usuario, password=password)
 
-         if user is not None: 
-             login(self.request, user)
-             messages.add_message(self.request, messages.SUCCESS, f"Bienvenido de nuevo {user.username}")
-             return HttpResponseRedirect( reverse('home') )
-         else: 
-             messages.add_message(self.request, messages.ERROR, 'Usuario no válido o contraseña no válida')
-             return super(LoginView, self).form_invalid(form)
+        if user is not None: 
+            login(self.request, user)
+            messages.add_message(self.request, messages.SUCCESS, f"Bienvenido de nuevo {user.username}")
+            return HttpResponseRedirect( reverse('home') )
+        else: 
+            messages.add_message(self.request, messages.ERROR, 'Usuario no válido o contraseña no válida')
+            return super(LoginView, self).form_invalid(form)
+        
+@login_required
+def logout_view(request): 
+    logout(request)
+    messages.add_message(request, messages.INFO, "Se ha cerrado sesión correctamente")
+    return HttpResponseRedirect(reverse('home'))
