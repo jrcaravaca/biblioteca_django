@@ -1,8 +1,11 @@
 <header class="flex justify-around p-4 bg-[#8C729A]">
         <h1 class="text-white font-bold text-xl"><a href={% url "home" %}>Bibloteca</a></h1>
     <nav>
-        <ul class="">
-            <li><a class="text-white"href="">Inicio</a></li>
+        <ul class="flex gap-2 text-white">
+            {% if not request.user.is_authenticated %}
+                <li><a href={% url "login" %}>Login</a></li>
+                <li><a href="">Registro</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
