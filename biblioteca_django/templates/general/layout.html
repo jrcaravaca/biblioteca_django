@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{%block headtitle%}Biblioteca{%endblock headtitle%}</title>
+    <title>{%block head_title%}{%endblock head_title%}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div class="container mx-auto py-8 px-4">
-        {% include "_includes/_header.html" %}
-        {% block page_content %}
-            {% comment %} CONTENIDO DE LA PÁGINA {% endcomment %}
-        {% endblock %}
-        {% include "_includes/_footer.html" %}
-    </div>
+<body class="min-h-screen flex flex-col justify-between">
+    {% include "_includes/_header.html" %}
+    <main class="flex-grow">
+    {% block page_content %}
+        {% comment %} CONTENIDO DE LA PÁGINA {% endcomment %}
+    {% endblock %}
+    </main>
+    {% include "_includes/_footer.html" %}
 </body>
 </html>

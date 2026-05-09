@@ -1,9 +1,10 @@
 {% extends "general/layout.html" %}
+{% block head_title %}Biblioteca - Home {% endblock %}
 
 {% block page_content %}
-    <div class="container p-4">
-        <h2>¡Bienvenido a la Biblioteca!</h2>
-        <div class="">
+        <h2 class="text-xl text-center">¡Bienvenido a la Biblioteca!</h2>
+            <section class="text-center">
+                <h3 class="text-l pb-4 pt-3">Últimos libros añadidos</h3>
                 {% for book in books %} 
                     <article class="flex flex-col items-center gap-2">
                         <p>{{book.title}}</p>
@@ -12,6 +13,5 @@
                 {% empty %}
                     <p>No hay libros en la biblioteca.</p>
                 {% endfor %}
-        </div>
-    </div>
+            </section>
 {% endblock %}
