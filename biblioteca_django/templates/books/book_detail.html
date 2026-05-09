@@ -1,4 +1,5 @@
 {% extends "general/layout.html" %} 
+{% load crispy_forms_tags %}
 {% block head_title %} Biblioteca - {{book.title}} {% endblock %} 
 
 {% block page_content %}
@@ -12,9 +13,51 @@
             <p><b>Editorial:</b> {{ book.editorial}}</p>
             <p><b>Fecha de Publicación:</b> {{ book.publication_date}}</p>
             <p><b>ISBN:</b> {{ book.isbn }}</p>
+            <p><b>Stock:</b> {{ book.cantidad }}</p>
+            <p><b>Puntuación de nuestros usuarios: </b> {{ book.average_rating }} </p>
             <hr>
             <p class="w-200 mt-2">{{ book.synopsis }}</p>
         </article>
     </section>
+        {% comment %} RESEÑAS {% endcomment %}
+    <section class="reviews" p-2 px-3">
+        <div>
+            <details>
+                <summary>Nueva Reseña</summary>
+                <form action="" method='post'>
+                    <div class="row">
+                        <div class="col col-12">
+                            {% csrf_token %}
+                            {{ form.review|as_crispy_field }}
+                            {{ form.puntuacion|as_crispy_field }}
+                        </div>
+                        <div class="col col-12">
+                            <button class="btn btn-primary btn-sm">Publicar</button>
+                        </div>
+                    </div>
+                </form>
+            </details>
+        </div>
+
+        <h5 class="text-center">Reseñas</h5>
+
+        {% if book.reviews.all.count %}
+            {% for review in book.reviews.all %}
+                <article class="border mb-1 p-2">
+                    <header>
+                        <strong>Autor:</strong> {{ review.user }} - <strong>Creado el: </strong>{{ review.created_at }} 
+                    </header>
+                    <div>
+                        
+                        <p> {{ review.review }} </p>
+                        <p><strong>Puntuación:</strong> {{ review.puntuacion }}/10</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>Todavía no hay comentarios para esta publicación</p>
+        {% endif %}
+
+    </section> 
     
 {% endblock %}

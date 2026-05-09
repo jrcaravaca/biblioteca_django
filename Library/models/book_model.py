@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from .author_model import Author
 from ..constants import GENRE_CHOICES, LANGS_CHOICES
 
@@ -19,6 +20,26 @@ class Book(models.Model):
     def out_of_stock(self):
         return self.cantidad <= 0
     
+    @property
+    def average_rating(self):
+        return self.reviews.aggregate(avg=Avg('puntuacion'))['avg'] or 0  
+    
     def __str__(self):
         status = ["SIN STOCK"] if self.out_of_stock else f"{self.cantidad} uds"
         return f"{self.title} - {status}"
+    
+
+class Review(models.Model): 
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")    
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='usuario')
+    review = models.TextField('Reseña', max_length=1500, blank=False, null=False)
+    created_at = models.DateField(auto_now_add=True, verbose_name='Fecha de creación del comentario')
+    puntuacion = models.PositiveIntegerField('Puntuación', blank=False, null=False)
+
+    class Meta: 
+        verbose_name = 'Reseña'
+        verbose_name_plural = 'Reseñas'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title}"
