@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view
-from Library.views import BookDetailView
+from Library.views import BookDetailView, BookCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,6 +15,7 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
 
     path("book-detail/<pk>", BookDetailView.as_view(), name="book-detail" ),
+    path("book-create/", BookCreateView.as_view(), name="book-create")
 ]
 
 if settings.DEBUG:

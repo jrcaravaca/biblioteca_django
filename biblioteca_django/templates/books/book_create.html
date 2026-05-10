@@ -1,0 +1,28 @@
+{% extends "general/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Biblioteca - Registro {% endblock %}
+
+
+{% block page_content %}
+    <h1 class="text-center text-3xl pt-4">Registrate</h1>
+    <form action="" method="post" class="pt-4 mx-auto max-w-sm text-center">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 col-sms-6">
+                {{ form.title|as_crispy_field}}
+                {{ form.language|as_crispy_field}}
+                {{ form.author|as_crispy_field}}
+                {{ form.editorial|as_crispy_field }}
+                {{ form.publication_date|as_crispy_field}}
+                {{ form.genre|as_crispy_field}}
+                {{ form.synopsis|as_crispy_field}}
+                {{ form.isbn|as_crispy_field}}
+                {{ form.cantidad|as_crispy_field}}
+                {{ form.frontpage|as_crispy_field}}
+
+            </div>
+            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Registrate</button>
+        </div>
+    </form>
+{% endblock %}

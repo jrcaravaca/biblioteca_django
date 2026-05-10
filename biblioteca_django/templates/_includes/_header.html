@@ -1,3 +1,5 @@
+{% load is_staff %}
+
 <header class="flex justify-around p-4 bg-pink-500">
         <h1 class="text-white font-bold text-xl"><a href={% url "home" %}>Bibloteca</a></h1>
     <nav>
@@ -8,6 +10,9 @@
             {% endif %}
             
             {% if request.user.is_authenticated %}
+                {% if request.user|has_group:"staff" %}
+                    <li><a href={% url "book-create" %}>Añadir Libro |</a></li>
+                {% endif %}
                 <li><a href={% url "logout" %}>Logout</a></li>
             {% endif %}
         </ul>

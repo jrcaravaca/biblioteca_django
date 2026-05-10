@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 
 from .models.book_model import Book
 from .models.author_model import Author
 from .models.loan_model import Loan
-from .forms import ReviewCreateForm
+from .forms import ReviewCreateForm, BookCreateForm
+
 
 
 
@@ -71,3 +72,17 @@ class BookDetailView(DetailView, FormView):
     
     def get_success_url(self):
         return reverse('book-detail', args=[self.get_object().pk])
+    
+
+@method_decorator(login_required, name='dispatch')
+class BookCreateView(CreateView): 
+    template_name = "books/book_create.html"
+    model = Book
+    success_url = reverse_lazy('home')
+    form_class = BookCreateForm
+
+    def form_valid(self, form): 
+        form.instance.user = self.request.user
+        form.save()
+        messages.add_message(self.request, messages.SUCCESS, 'Libro creado correctamente')
+        return super(BookCreateView, self).form_valid(form)
