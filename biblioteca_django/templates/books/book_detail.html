@@ -20,30 +20,32 @@
         </article>
     </section>
         {% comment %} RESEÑAS {% endcomment %}
-    <section class="reviews" p-2 px-3">
-        <div>
-            <details>
-                <summary>Nueva Reseña</summary>
+    <section class="reviews px-3 py-4">
+            <h5 class="text-center text-xl mb-4 font-bold">Reseñas</h5>
+        <div class="mb-5">
+            <details class="cursor-pointer">
+                <summary>Añadir Reseña</summary>
                 <form action="" method='post'>
                     <div class="row">
                         <div class="col col-12">
                             {% csrf_token %}
                             {{ form.review|as_crispy_field }}
-                            {{ form.puntuacion|as_crispy_field }}
+                            <div class="w-50">
+                                {{ form.puntuacion|as_crispy_field }}
+                            </div>
                         </div>
-                        <div class="col col-12">
-                            <button class="btn btn-primary btn-sm">Publicar</button>
+                        <div class="col col-12 flex justify-center items-center">
+                            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center"">Publicar</button>
                         </div>
                     </div>
                 </form>
             </details>
         </div>
 
-        <h5 class="text-center">Reseñas</h5>
 
         {% if book.reviews.all.count %}
             {% for review in book.reviews.all %}
-                <article class="border mb-1 p-2">
+                <article class="mb-4 border-gray-300 px-4 w-200 focus:outline-none text-gray-700 border py-2 rounded-lg leading-normal appearance-none bg-white block">
                     <header>
                         <strong>Autor:</strong> {{ review.user }} - <strong>Creado el: </strong>{{ review.created_at }} 
                     </header>

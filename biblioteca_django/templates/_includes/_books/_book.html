@@ -1,8 +1,10 @@
 <article class="flex flex-col items-center gap-2">
-      <img
-        class="w-48 h-64 object-cover object-center rounded-lg shadow-md"
-        src="{{ book.frontpage.url }}"
-        alt="{{ book.title }}"
-      />
-      <p><a href={% url "book-detail" book.pk %}>{{book.title}}</a></p>
+  <a href="{% url "book-detail" book.pk %}">
+    <img
+      class="w-48 h-64 object-cover object-center rounded-lg shadow-md"
+      src="{{ book.frontpage.url }}"
+      alt="{{ book.title }}"
+    />
+    <p>{{book.title}}</p>
+  </a>
 </article>

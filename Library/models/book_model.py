@@ -22,7 +22,7 @@ class Book(models.Model):
     
     @property
     def average_rating(self):
-        return self.reviews.aggregate(avg=Avg('puntuacion'))['avg'] or 0  
+        return self.reviews.aggregate(avg=Avg('puntuacion'))['avg'] or "Aún no hay reseñas"  
     
     def __str__(self):
         status = ["SIN STOCK"] if self.out_of_stock else f"{self.cantidad} uds"
@@ -34,7 +34,7 @@ class Review(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='usuario')
     review = models.TextField('Reseña', max_length=1500, blank=False, null=False)
     created_at = models.DateField(auto_now_add=True, verbose_name='Fecha de creación del comentario')
-    puntuacion = models.PositiveIntegerField('Puntuación', blank=False, null=False)
+    puntuacion = models.PositiveIntegerField('Puntuación', blank=False, null=False, choices=((i,i) for i in range (1,11)))
 
     class Meta: 
         verbose_name = 'Reseña'

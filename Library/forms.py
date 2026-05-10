@@ -17,3 +17,4 @@ class ReviewCreateForm(forms.ModelForm):
             'review',
             'puntuacion'
         ]
+
