@@ -5,7 +5,7 @@
 {% block page_content %}
     <h2 class="text-[2rem] text-center pb-4 pt-4">{{ book.title }}</h2>
     <section class="flex justify-center gap-4">
-        <img class="w-55 h-75"src=" {{ book.frontpage.url }}" alt={{ book.title }}">
+        <img class="w-55 h-75" src={{ book.frontpage.url }} alt={{ book.title }}">
         <article>
             <hr>
             <b>Autor: </b> {{ book.author.first.name }} {{ book.author.first.last_name }} </p>
@@ -15,8 +15,17 @@
             <p><b>ISBN:</b> {{ book.isbn }}</p>
             <p><b>Stock:</b> {{ book.cantidad }}</p>
             <p><b>Puntuación de nuestros usuarios: </b> {{ book.average_rating }} </p>
+            <form method="post">
+                {% csrf_token %}
+                {% if not loaned %}
+                    <button type="submit" name="action" value="loan" class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Pedir Prestado</button>
+                {% else %}
+                    <button type="submit" name="action" value="loan" class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Devolver Libro</button>
+                {% endif %}
+            </form>
             <hr>
             <p class="w-200 mt-2">{{ book.synopsis }}</p>
+            
         </article>
     </section>
         {% comment %} RESEÑAS {% endcomment %}
@@ -35,7 +44,7 @@
                             </div>
                         </div>
                         <div class="col col-12 flex justify-center items-center">
-                            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center"">Publicar</button>
+                            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Publicar</button>
                         </div>
                     </div>
                 </form>

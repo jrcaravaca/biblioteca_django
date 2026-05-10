@@ -7,7 +7,6 @@ class Loan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="loans")
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     loan_date = models.DateField()
-    max_return_date = models.DateField(blank=True, null=True)
     return_date = models.DateField(blank=True, null=True)
     returned = models.BooleanField(default=False)
 
