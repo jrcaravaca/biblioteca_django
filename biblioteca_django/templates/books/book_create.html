@@ -1,12 +1,12 @@
 {% extends "general/layout.html" %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}Biblioteca - Registro {% endblock %}
+{% block head_title %}Biblioteca - Añadir Libro {% endblock %}
 
 
 {% block page_content %}
-    <h1 class="text-center text-3xl pt-4">Registrate</h1>
-    <form action="" method="post" class="pt-4 mx-auto max-w-sm text-center">
+    <h1 class="text-center text-3xl pt-4">Añadir Libro</h1>
+    <form action="" method="post" enctype="multipart/form-data" class="pt-4 mx-auto max-w-sm text-center">
         {% csrf_token %}
         <div class="row">
             <div class="col-12 col-sms-6">
@@ -22,7 +22,7 @@
                 {{ form.frontpage|as_crispy_field}}
 
             </div>
-            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Registrate</button>
+            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Añadir Libro</button>
         </div>
     </form>
 {% endblock %}
