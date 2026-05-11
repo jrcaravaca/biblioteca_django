@@ -9,10 +9,10 @@ class Book(models.Model):
     language = models.CharField('Idioma',max_length=2, choices=LANGS_CHOICES, default='ES', blank=False, null=False)
     genre = models.CharField('Genero', choices=GENRE_CHOICES, default='OTHER', blank=False, null=False)
     synopsis = models.TextField('Sinopsis', blank=False, null=False)
-    author = models.ManyToManyField(Author, related_name='books', blank=False)
+    author = models.ManyToManyField('Author', verbose_name='Autor', related_name='books', blank=False)
     editorial = models.CharField('Editorial',max_length=100)
-    publication_date = models.DateField()
-    isbn = models.CharField(max_length=13, unique=True) 
+    publication_date = models.DateField('Fecha de publicación')
+    isbn = models.CharField('ISBN',max_length=13, unique=True) 
     cantidad = models.PositiveIntegerField('Cantidad Disponible', default=1)
     frontpage = models.ImageField('Portada', upload_to='books/covers/', blank=True, null=True)
 

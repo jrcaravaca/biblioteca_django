@@ -1,10 +1,10 @@
 
 from django.contrib import admin
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view
-from Library.views import BookDetailView, BookCreateView
+from Library.views import BookDetailView, BookCreateView, AuthorCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +15,10 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
 
     path("book-detail/<pk>", BookDetailView.as_view(), name="book-detail" ),
-    path("book-create/", BookCreateView.as_view(), name="book-create")
+    path("book-create/", BookCreateView.as_view(), name="book-create"),
+
+    path("author-create/", AuthorCreateView.as_view(), name="author-create"),
+
 ]
 
 if settings.DEBUG:

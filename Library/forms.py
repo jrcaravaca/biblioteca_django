@@ -1,4 +1,5 @@
 from .models.book_model import Book, Review
+from .models.author_model import Author
 from django import forms
 
 class BookCreateForm(forms.ModelForm): 
@@ -17,8 +18,10 @@ class BookCreateForm(forms.ModelForm):
             'frontpage'
         ]
         widgets = {
-            'publication_date': forms.DateInput(attrs={'type': 'date'})
+            'publication_date': forms.DateInput(attrs={'type': 'date'}),
+            'author': forms.SelectMultiple()
         }
+
 
 
 
@@ -30,3 +33,19 @@ class ReviewCreateForm(forms.ModelForm):
             'puntuacion'
         ]
 
+
+class AuthorCreateForm(forms.ModelForm): 
+    class Meta: 
+        model = Author
+        fields= [
+            'name',
+            'last_name', 
+            'nationality', 
+            'biography', 
+            'birth_date',
+            'death_date'
+        ]
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+            'death_date': forms.DateInput(attrs={'type': 'date'})
+        }

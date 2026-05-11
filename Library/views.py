@@ -10,7 +10,7 @@ from django.utils import timezone
 from .models.book_model import Book
 from .models.author_model import Author
 from .models.loan_model import Loan
-from .forms import ReviewCreateForm, BookCreateForm
+from .forms import ReviewCreateForm, BookCreateForm, AuthorCreateForm
 
 
 
@@ -86,3 +86,24 @@ class BookCreateView(CreateView):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 'Libro creado correctamente')
         return super(BookCreateView, self).form_valid(form)
+    
+
+@method_decorator(login_required, name='dispatch')
+class AuthorCreateView(CreateView): 
+    template_name = "authors/author_create.html"
+    model = Author
+    success_url = reverse_lazy('home')
+    form_class = AuthorCreateForm
+
+    def form_valid(self, form): 
+        
+        form.save()
+        messages.add_message(self.request, messages.SUCCESS, 'Autor creado correctamente')
+        return super(AuthorCreateView, self).form_valid(form)
+    
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url: 
+            return next_url
+
+        return super().get_success_url()

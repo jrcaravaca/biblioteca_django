@@ -12,6 +12,7 @@
             {% if request.user.is_authenticated %}
                 {% if request.user|has_group:"staff" %}
                     <li><a href={% url "book-create" %}>Añadir Libro |</a></li>
+                    <li><a href={% url "author-create" %}>Añadir Autor |</a></li>
                 {% endif %}
                 <li><a href={% url "logout" %}>Logout</a></li>
             {% endif %}
