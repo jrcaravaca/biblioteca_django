@@ -7,7 +7,7 @@ from ..constants import GENRE_CHOICES, LANGS_CHOICES
 class Book(models.Model): 
     title = models.CharField('Titulo',max_length=100, unique=True, blank=False, null=False)
     language = models.CharField('Idioma',max_length=2, choices=LANGS_CHOICES, default='ES', blank=False, null=False)
-    genre = models.CharField('Genero',max_length=10, choices=GENRE_CHOICES, default='OTHER', blank=False, null=False)
+    genre = models.CharField('Genero', choices=GENRE_CHOICES, default='OTHER', blank=False, null=False)
     synopsis = models.TextField('Sinopsis', blank=False, null=False)
     author = models.ManyToManyField(Author, related_name='books', blank=False)
     editorial = models.CharField('Editorial',max_length=100)
