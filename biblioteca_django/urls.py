@@ -4,7 +4,8 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view
-from Library.views import BookDetailView, BookCreateView, AuthorCreateView
+from Library.views import BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,6 +19,7 @@ urlpatterns = [
     path("book-create/", BookCreateView.as_view(), name="book-create"),
 
     path("author-create/", AuthorCreateView.as_view(), name="author-create"),
+    path("author-detail/<pk>", AuthorDetailView.as_view(), name="author-detail"),
 
 ]
 

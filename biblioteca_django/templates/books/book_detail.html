@@ -8,7 +8,7 @@
         <img class="w-55 h-75" src={{ book.frontpage.url }} alt={{ book.title }}">
         <article>
             <hr>
-            <b>Autor: </b> {{ book.author.first.name }} {{ book.author.first.last_name }} </p>
+            <b>Autor: </b> <a href="{% url "author-detail" book.author.first.pk %}"">{{ book.author.first.name }} {{ book.author.first.last_name }}</a> </p>
             <p><b>Genero: </b> {{ book.genre }}</p>
             <p><b>Editorial:</b> {{ book.editorial}}</p>
             <p><b>Fecha de Publicación:</b> {{ book.publication_date}}</p>

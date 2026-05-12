@@ -1,0 +1,23 @@
+{% extends "general/layout.html" %} 
+{% load crispy_forms_tags %}
+{% block head_title %} Biblioteca - {{author.name}} {% endblock %} 
+
+{% block page_content %}
+    <h2 class="text-[2rem] text-center pb-4 pt-4">{{ author.name }} {{ author.last_name }}</h2>
+    <section class="flex justify-center gap-4">
+        <img class="w-55 h-75" src="{{ author.photo.url }}" alt="{{ author.name }}">
+        <article>
+            <hr>
+            <b>Nacionalidad: </b> {{ author.nationality }} </p>
+            <p><b>Nacimiento: </b> {{ author.birth_date }}</p>
+            {% if author.birtdeath %}
+                <p><b>Fallecimiento: </b> {{ author.birthdeath }}</p>
+            {% endif %}
+            
+            <hr>
+            <p class="w-200 mt-2">{{ author.biography }}</p>
+            
+        </article>
+    </section>
+        
+{% endblock %}

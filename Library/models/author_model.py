@@ -7,7 +7,7 @@ class Author(models.Model):
     biography = models.TextField('Biografía', blank=True, null=True)
     birth_date = models.DateField('Fecha de nacimiento',blank=True, null=True)
     death_date = models.DateField('Fecha de fallecimiento',blank=True, null=True)
-    
+    photo = models.ImageField('Fotografía', upload_to='authors/photos/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} {self.last_name}"

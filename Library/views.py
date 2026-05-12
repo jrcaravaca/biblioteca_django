@@ -74,6 +74,7 @@ class BookDetailView(DetailView, FormView):
         return reverse('book-detail', args=[self.get_object().pk])
     
 
+
 @method_decorator(login_required, name='dispatch')
 class BookCreateView(CreateView): 
     template_name = "books/book_create.html"
@@ -107,3 +108,10 @@ class AuthorCreateView(CreateView):
             return next_url
 
         return super().get_success_url()
+
+
+class AuthorDetailView(DetailView): 
+    model = Author
+    template_name = "authors/author_detail.html"
+    context_object_name = "author"
+    
