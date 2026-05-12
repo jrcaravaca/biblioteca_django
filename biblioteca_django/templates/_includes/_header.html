@@ -5,16 +5,15 @@
     <nav>
         <ul class="flex gap-4 text-white">
             {% if not request.user.is_authenticated %}
-                <li><a href={% url "login" %}>Login</a></li>
-                <li><a href={% url "register" %}>Registro</a></li>
+                <li><a href={% url "login" %} class="w-full justify-center gap-x-1.5 rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold text-white hover:bg-pink-600 border-0=">Iniciar Sesión</a></li>
+                <li><a href={% url "register" %} class="w-full justify-center gap-x-1.5 rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold text-white hover:bg-pink-600 border-0=">Registrate</a></li>
             {% endif %}
             
             {% if request.user.is_authenticated %}
                 {% if request.user|has_group:"staff" %}
-                    <li><a href={% url "book-create" %}>Añadir Libro |</a></li>
-                    <li><a href={% url "author-create" %}>Añadir Autor |</a></li>
+                   {% include "_includes/_staff_menu.html" %}
                 {% endif %}
-                <li><a href={% url "logout" %}>Logout</a></li>
+                    {% include "_includes/_user_menu.html" %}
             {% endif %}
         </ul>
     </nav>
