@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from dal import autocomplete
+from django.db.models import Q
 
 from .models.book_model import Book
 from .models.author_model import Author
@@ -118,9 +119,12 @@ class AuthorDetailView(DetailView):
 
 class AuthorAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        # Es vital filtrar para mantener el rendimiento
+        
         qs = Author.objects.all()
         if self.q:
-            qs = qs.filter(name__icontains=self.q) # Cambia 'name' por el campo de tu modelo
+            qs = qs.filter(
+                Q(name__icontains=self.q)  |
+                Q(last_name__icontains=self.q)
+            )
         return qs
     
