@@ -1,6 +1,7 @@
 {% extends "general/layout.html" %}
 {% load crispy_forms_tags %}
 
+
 {% block head_title %}Biblioteca - Añadir Libro {% endblock %}
 
 
@@ -13,7 +14,7 @@
                 {{ form.title|as_crispy_field}}
                 {{ form.language|as_crispy_field}}
                 {{ form.author|as_crispy_field}}
-                <p class="mt-[-2]"><a class="text-sm text-pink-500"href="{% url "author-create" %}?next={{request.path}}">Añadir Autor</a></p>
+                <button class="mb-2 bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center"><a href="{% url "author-create" %}?next={{request.path}}">Añadir Autor</a></button>
                 {{ form.editorial|as_crispy_field }}
                 {{ form.publication_date|as_crispy_field}}
                 {{ form.genre|as_crispy_field}}
@@ -27,3 +28,4 @@
     </form>
     {{ form.media }}
 {% endblock %}
+

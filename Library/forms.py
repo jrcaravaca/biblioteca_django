@@ -1,6 +1,7 @@
 from .models.book_model import Book, Review
 from .models.author_model import Author
 from django import forms
+from dal import autocomplete
 
 class BookCreateForm(forms.ModelForm): 
     class Meta: 
@@ -19,8 +20,15 @@ class BookCreateForm(forms.ModelForm):
         ]
         widgets = {
             'publication_date': forms.DateInput(attrs={'type': 'date'}),
-            'author': forms.SelectMultiple()
+            'author': autocomplete.ModelSelect2Multiple(
+                url='author-autocomplete',
+                attrs={
+                    'data-placeholder': 'Buscar autor...',
+                    'data-minimum-input-length': 3,
+                }
+            )
         }
+
 
 
 
@@ -47,5 +55,5 @@ class AuthorCreateForm(forms.ModelForm):
         ]
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
-            'death_date': forms.DateInput(attrs={'type': 'date'})
+            'death_date': forms.DateInput(attrs={'type': 'date'}),
         }

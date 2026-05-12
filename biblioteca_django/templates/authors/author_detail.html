@@ -18,6 +18,12 @@
             <p class="w-200 mt-2">{{ author.biography }}</p>
             
         </article>
+        
+    </section>
+    <section>
+        {% for book in author.book  %}
+            <p>{{ book.title }}</p>
+        {% endfor %}
     </section>
         
 {% endblock %}
