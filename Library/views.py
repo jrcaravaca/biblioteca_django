@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView, CreateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -97,6 +97,16 @@ class BookListView(ListView):
     context_object_name = "books"
     paginate_by = 10
 
+    
+@method_decorator(login_required, name='dispatch')
+class BookDeleteView(DeleteView): 
+    model = Book
+    template_name = "books/book_delete.html"
+    success_url = reverse_lazy('home')
+    
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, "Libro eliminado correctamente")
+        return super().post(request, *args, **kwargs)
     
 
 @method_decorator(login_required, name='dispatch')
