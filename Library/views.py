@@ -120,6 +120,7 @@ class AuthorCreateView(CreateView):
         return super().get_success_url()
 
 
+@method_decorator(login_required, name='dispatch')
 class AuthorDetailView(DetailView): 
     model = Author
     template_name = "authors/author_detail.html"
@@ -132,6 +133,7 @@ class AuthorDetailView(DetailView):
         return context
     
 
+@method_decorator(login_required, name='dispatch')
 class AuthorAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         
@@ -143,3 +145,10 @@ class AuthorAutocomplete(autocomplete.Select2QuerySetView):
             )
         return qs
     
+
+@method_decorator(login_required, name='dispatch')
+class AuthorListView(ListView):
+    model = Author
+    template_name = "authors/author_list.html"
+    context_object_name = "authors"
+    paginate_by = 10

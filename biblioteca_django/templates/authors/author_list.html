@@ -1,0 +1,23 @@
+{% extends "general/layout.html" %} 
+{% block head_title %} Biblioteca - Lista de Autores {% endblock %} 
+
+{% block page_content %}
+<h2 class="text-xl text-center pb-4">Todos nuestros autores</h2>
+<div class="w-full pt-5 px-4 mb-8 mx-auto"></div>
+<section class="text-center">
+  <div class="grid grid-cols-3 gap-5 mx-auto">
+    {% for author in authors %}
+      <a href="{% url "author-detail" author.pk %}">
+      <img
+        class="w-48 h-64 object-cover object-center rounded-lg shadow-md"
+        src="{{ author.photo.url }}"
+        alt="{{ author.name }}"
+      />
+      <p>{{author.name}} {{author.last_name}}</p>
+  </a>
+    {% empty %}
+    <p>No hay autores en la biblioteca.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
