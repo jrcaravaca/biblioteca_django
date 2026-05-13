@@ -13,6 +13,7 @@
                 {% if request.user|has_group:"staff" %}
                    {% include "_includes/_staff_menu.html" %}
                 {% endif %}
+                    {% include "_includes/_book_button.html" %}
                     {% include "_includes/_user_menu.html" %}
             {% endif %}
         </ul>

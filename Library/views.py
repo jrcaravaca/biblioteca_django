@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, CreateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -76,7 +76,6 @@ class BookDetailView(DetailView, FormView):
         return reverse('book-detail', args=[self.get_object().pk])
     
 
-
 @method_decorator(login_required, name='dispatch')
 class BookCreateView(CreateView): 
     template_name = "books/book_create.html"
@@ -89,6 +88,15 @@ class BookCreateView(CreateView):
         form.save()
         messages.add_message(self.request, messages.SUCCESS, 'Libro creado correctamente')
         return super(BookCreateView, self).form_valid(form)
+    
+
+@method_decorator(login_required, name='dispatch')
+class BookListView(ListView):
+    model = Book
+    template_name = "books/book_list.html"
+    context_object_name = "books"
+    paginate_by = 10
+
     
 
 @method_decorator(login_required, name='dispatch')
@@ -116,6 +124,13 @@ class AuthorDetailView(DetailView):
     model = Author
     template_name = "authors/author_detail.html"
     context_object_name = "author"
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs)
+        context["books"] = Book.objects.filter(author=self.object.pk)
+ 
+        return context
+    
 
 class AuthorAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):

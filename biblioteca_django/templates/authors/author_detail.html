@@ -20,10 +20,15 @@
         </article>
         
     </section>
-    <section>
-        {% for book in author.book  %}
-            <p>{{ book.title }}</p>
+    <section class="text-center text-lg">
+        <h2>Libro de este autor en stock</h2>
+        <div class="grid grid-cols-3 gap-5 mx-auto mt-5">
+        {% for book in books %}
+            {% include "_includes/_books/_book.html" %}
+        {% empty %}
+            <p>No hay libros en la biblioteca.</p>
         {% endfor %}
+        </div>
     </section>
         
 {% endblock %}

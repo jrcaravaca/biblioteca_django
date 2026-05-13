@@ -1,0 +1,16 @@
+{% extends "general/layout.html" %} 
+{% block head_title %} Biblioteca - Lista de libros {% endblock %} 
+
+{% block page_content %}
+<h2 class="text-xl text-center pb-4">Todos nuestros libros</h2>
+<div class="w-full pt-5 px-4 mb-8 mx-auto"></div>
+<section class="text-center">
+  <div class="grid grid-cols-3 gap-5 mx-auto">
+    {% for book in books %}
+      {% include "_includes/_books/_book.html" %}
+    {% empty %}
+    <p>No hay libros en la biblioteca.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
