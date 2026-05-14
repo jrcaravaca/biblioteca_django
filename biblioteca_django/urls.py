@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
-from .views import HomeView, LoginView, RegisterView, logout_view
+from .views import HomeView, LoginView, RegisterView, logout_view, acces_denied
 from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView, 
                         AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
                         AuthorDeleteView)
@@ -29,6 +29,7 @@ urlpatterns = [
     path("author-delete/<pk>", AuthorDeleteView.as_view(), name="author-delete"),
     path("author-list/", AuthorListView.as_view(), name="author-list"),
 
+    path("access-denied/", acces_denied, name="access-denied")
 ]
 
 if settings.DEBUG:

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from ..models.book_model import Book
 from ..models.author_model import Author
@@ -75,7 +76,7 @@ class BookDetailView(DetailView, FormView):
     
 
 @method_decorator(login_required, name='dispatch')
-class BookCreateView(CreateView): 
+class BookCreateView(UserPassesTestMixin, CreateView): 
     template_name = "books/book_create.html"
     model = Book
     success_url = reverse_lazy('home')
@@ -87,6 +88,12 @@ class BookCreateView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, 'Libro creado correctamente')
         return super(BookCreateView, self).form_valid(form)
     
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')
+    
 
 @method_decorator(login_required, name='dispatch')
 class BookListView(ListView):
@@ -97,7 +104,7 @@ class BookListView(ListView):
 
     
 @method_decorator(login_required, name='dispatch')
-class BookDeleteView(DeleteView): 
+class BookDeleteView(UserPassesTestMixin,DeleteView): 
     model = Book
     template_name = "books/book_delete.html"
     success_url = reverse_lazy('home')
@@ -106,3 +113,8 @@ class BookDeleteView(DeleteView):
         messages.success(self.request, "Libro eliminado correctamente")
         return super().post(request, *args, **kwargs)
     
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')

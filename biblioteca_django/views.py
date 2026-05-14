@@ -55,6 +55,10 @@ class RegisterView(CreateView):
    
 @login_required
 def logout_view(request): 
+
     logout(request)
     messages.add_message(request, messages.INFO, "Se ha cerrado sesión correctamente")
     return HttpResponseRedirect(reverse('home'))
+
+def acces_denied(request): 
+    return render(request, "general/access_denied.html")

@@ -7,13 +7,15 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from dal import autocomplete
 from django.db.models import Q
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 
 from ..models.book_model import Book
 from ..models.author_model import Author
 from ..forms import AuthorCreateForm
 
 @method_decorator(login_required, name='dispatch')
-class AuthorCreateView(CreateView): 
+class AuthorCreateView(UserPassesTestMixin, CreateView): 
     template_name = "authors/author_create.html"
     model = Author
     success_url = reverse_lazy('home')
@@ -31,6 +33,12 @@ class AuthorCreateView(CreateView):
             return next_url
 
         return super().get_success_url()
+     
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -47,6 +55,30 @@ class AuthorDetailView(DetailView):
     
 
 @method_decorator(login_required, name='dispatch')
+class AuthorListView(ListView):
+    model = Author
+    template_name = "authors/author_list.html"
+    context_object_name = "authors"
+    paginate_by = 10
+
+@method_decorator(login_required, name='dispatch')
+class AuthorDeleteView(UserPassesTestMixin, DeleteView): 
+    model = Author
+    template_name = "authors/author_delete.html"
+    success_url = reverse_lazy('home')
+    
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, "Autor eliminado correctamente")
+        return super().post(request, *args, **kwargs)
+    
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')
+    
+
+@method_decorator(login_required, name='dispatch')
 class AuthorAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         
@@ -59,19 +91,3 @@ class AuthorAutocomplete(autocomplete.Select2QuerySetView):
         return qs
     
 
-@method_decorator(login_required, name='dispatch')
-class AuthorListView(ListView):
-    model = Author
-    template_name = "authors/author_list.html"
-    context_object_name = "authors"
-    paginate_by = 10
-
-@method_decorator(login_required, name='dispatch')
-class AuthorDeleteView(DeleteView): 
-    model = Author
-    template_name = "authors/author_delete.html"
-    success_url = reverse_lazy('home')
-    
-    def post(self, request, *args, **kwargs):
-        messages.success(self.request, "Autor eliminado correctamente")
-        return super().post(request, *args, **kwargs)
