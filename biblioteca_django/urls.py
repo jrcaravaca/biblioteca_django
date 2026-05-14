@@ -5,7 +5,8 @@ from django.urls import path, include
 from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view
 from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView, 
-                        AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView )
+                        AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
+                        AuthorDeleteView)
 
 
 
@@ -25,6 +26,7 @@ urlpatterns = [
     path("author-create/", AuthorCreateView.as_view(), name="author-create"),
     path("author-detail/<pk>", AuthorDetailView.as_view(), name="author-detail"),
     path('author-autocomplete/', AuthorAutocomplete.as_view(), name='author-autocomplete'),
+    path("author-delete/<pk>", AuthorDeleteView.as_view(), name="author-delete"),
     path("author-list/", AuthorListView.as_view(), name="author-list"),
 
 ]

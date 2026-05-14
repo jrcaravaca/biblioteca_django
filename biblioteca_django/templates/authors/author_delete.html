@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 
-{% block head_title %}Biblioteca - Eliminar Libro {% endblock %}
+{% block head_title %}Biblioteca - Eliminar Autor {% endblock %}
 
 {% block page_content %}
     <form action="" method="post">
@@ -12,9 +12,10 @@
                         text-white font-bold py-2 px-4 rounded text-center">
             Eliminar
         </button>
-       <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
+        <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
                         text-white font-bold py-2 px-4 rounded text-center">
-            <a href="{% url "book-detail" book.pk %}" object.pk>Cancelar</a>
+            <a href="{% url "author-detail" author.pk %}" object.pk>Cancelar</a>
         </button>
+    </form>
 {% endblock %}
 

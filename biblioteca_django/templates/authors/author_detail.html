@@ -1,4 +1,5 @@
 {% extends "general/layout.html" %} 
+{% load is_staff %}
 {% load crispy_forms_tags %}
 {% block head_title %} Biblioteca - {{author.name}} {% endblock %} 
 
@@ -18,7 +19,6 @@
             <p class="w-200 mt-2">{{ author.biography }}</p>
             
         </article>
-        
     </section>
     <section class="text-center text-lg">
         <h2>Libro de este autor en stock</h2>
@@ -30,5 +30,13 @@
         {% endfor %}
         </div>
     </section>
+    {% if request.user|has_group:"staff" %}
+    <section id="staff">
+        <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
+                        text-white font-bold py-2 px-4 rounded text-center">
+            <a href={% url "author-delete" author.pk %}>Eliminar Autor
+        </button></a>
+    </section>
+    {% endif %}
         
 {% endblock %}

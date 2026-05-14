@@ -162,3 +162,12 @@ class AuthorListView(ListView):
     template_name = "authors/author_list.html"
     context_object_name = "authors"
     paginate_by = 10
+
+class AuthorDeleteView(DeleteView): 
+    model = Author
+    template_name = "authors/author_delete.html"
+    success_url = reverse_lazy('home')
+    
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, "Autor eliminado correctamente")
+        return super().post(request, *args, **kwargs)
