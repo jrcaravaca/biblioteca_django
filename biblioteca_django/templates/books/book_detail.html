@@ -6,7 +6,15 @@
 {% block page_content %}
     <h2 class="text-[2rem] text-center pb-4 pt-4">{{ book.title }}</h2>
     <section class="flex justify-center gap-4">
-        <img class="w-55 h-75" src={{ book.frontpage.url }} alt={{ book.title }}">
+        <div>
+        <img class="w-55 h-75" src={{ book.frontpage.url }} alt={{ book.title }}>
+        {% if request.user|has_group:"staff" %}
+            <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">
+                    <a href="{% url "book-delete" book.pk %}">Eliminar libro</a>
+            </button>
+        {% endif %}
+        </div>
+
         <article>
             <hr>
             <b>Autor: </b> <a href="{% url "author-detail" book.author.first.pk %}"">{{ book.author.first.name }} {{ book.author.first.last_name }}</a> </p>
@@ -32,9 +40,7 @@
 
             </form>
 
-            <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">
-                <a href="{% url "book-delete" book.pk %}">Eliminar libro</a>
-            </button>
+            
             <hr>
             <p class="w-200 mt-2">{{ book.synopsis }}</p>
             
