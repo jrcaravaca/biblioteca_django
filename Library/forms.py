@@ -25,8 +25,10 @@ class BookCreateForm(forms.ModelForm):
                 attrs={
                     'data-placeholder': 'Buscar autor...',
                     'data-minimum-input-length': 3,
-                }
-            )
+                }),
+            'frontpage': forms.FileInput(attrs={'class': 'block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 '
+                                                     'file:text-sm file:font-semibold file:bg-pink-500 file:text-white hover:file:bg-pink-600'
+                })
         }
 
 
@@ -51,9 +53,12 @@ class AuthorCreateForm(forms.ModelForm):
             'nationality', 
             'biography', 
             'birth_date',
-            'death_date'
+            'death_date',
+            'photo'
         ]
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
             'death_date': forms.DateInput(attrs={'type': 'date'}),
+            'photo': forms.FileInput(attrs={'class': 'block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 '
+                                                     'file:text-sm file:font-semibold file:bg-pink-500 file:text-white hover:file:bg-pink-600'})
         }
