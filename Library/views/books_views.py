@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import FormView, CreateView, DeleteView
+from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django import forms
 
 from ..models.book_model import Book
 from ..models.author_model import Author
@@ -118,3 +119,25 @@ class BookDeleteView(UserPassesTestMixin,DeleteView):
 
     def handle_no_permission(self):
         return redirect('access-denied')
+
+@method_decorator(login_required, name='dispatch')
+class BookUpdateView(UserPassesTestMixin, UpdateView, FormView): 
+    model = Book
+    template_name = "books/book_update.html"
+    context_object_name = "book"
+    form_class = BookCreateForm
+
+    def form_valid(self, form): 
+        messages.add_message(self.request, messages.SUCCESS, "Libro editado correctamente")
+        return super(BookUpdateView, self).form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('book-detail', args=[self.object.pk])
+    
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')
+    
+

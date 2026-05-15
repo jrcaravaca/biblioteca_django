@@ -12,6 +12,9 @@
             <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">
                     <a href="{% url "book-delete" book.pk %}">Eliminar libro</a>
             </button>
+            <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">
+                    <a href="{% url "book-update" book.pk %}">Editar libro</a>
+            </button>
         {% endif %}
         </div>
 

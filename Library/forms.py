@@ -32,9 +32,6 @@ class BookCreateForm(forms.ModelForm):
         }
 
 
-
-
-
 class ReviewCreateForm(forms.ModelForm): 
     class Meta: 
         model = Review
@@ -62,3 +59,4 @@ class AuthorCreateForm(forms.ModelForm):
             'photo': forms.FileInput(attrs={'class': 'block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 '
                                                      'file:text-sm file:font-semibold file:bg-pink-500 file:text-white hover:file:bg-pink-600'})
         }
+

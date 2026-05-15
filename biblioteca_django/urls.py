@@ -6,7 +6,7 @@ from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view, acces_denied
 from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView, 
                         AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
-                        AuthorDeleteView)
+                        AuthorDeleteView, BookUpdateView)
 
 
 
@@ -22,6 +22,7 @@ urlpatterns = [
     path("book-create/", BookCreateView.as_view(), name="book-create"),
     path("book-list/", BookListView.as_view(), name="book-list"),
     path("book-delete/<pk>", BookDeleteView.as_view(), name="book-delete"),
+    path("book-update/<pk>", BookUpdateView.as_view(), name="book-update"),
 
     path("author-create/", AuthorCreateView.as_view(), name="author-create"),
     path("author-detail/<pk>", AuthorDetailView.as_view(), name="author-detail"),
