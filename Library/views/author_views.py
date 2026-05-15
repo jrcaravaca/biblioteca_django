@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import FormView, CreateView, DeleteView
+from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -91,3 +91,22 @@ class AuthorAutocomplete(autocomplete.Select2QuerySetView):
         return qs
     
 
+@method_decorator(login_required, name='dispatch')
+class AuthorUpdateView(UserPassesTestMixin, UpdateView): 
+    model = Author
+    template_name = "authors/author_update.html"
+    context_object_name = "author"
+    form_class = AuthorCreateForm
+
+    def form_valid(self, form): 
+        messages.add_message(self.request, messages.SUCCESS, "Autor editado correctamente")
+        return super(AuthorUpdateView, self).form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('author-detail', args=[self.object.pk])
+    
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')

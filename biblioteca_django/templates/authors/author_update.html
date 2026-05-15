@@ -22,6 +22,10 @@
 
             </div>
             <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Editar Autor</button>
+            <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
+                        text-white font-bold py-2 px-4 rounded text-center">
+            <a href="{% url "author-detail" author.pk %}" object.pk>Cancelar</a>
+            </button>
         </div>
     </form>
 {% endblock %}

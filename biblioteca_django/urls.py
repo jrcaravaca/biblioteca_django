@@ -6,7 +6,7 @@ from django.conf import settings
 from .views import HomeView, LoginView, RegisterView, logout_view, acces_denied
 from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView, 
                         AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
-                        AuthorDeleteView, BookUpdateView)
+                        AuthorDeleteView, BookUpdateView, AuthorUpdateView)
 
 
 
@@ -29,6 +29,7 @@ urlpatterns = [
     path('author-autocomplete/', AuthorAutocomplete.as_view(), name='author-autocomplete'),
     path("author-delete/<pk>", AuthorDeleteView.as_view(), name="author-delete"),
     path("author-list/", AuthorListView.as_view(), name="author-list"),
+    path("author-update/<pk>", AuthorUpdateView.as_view(), name="author-update"),
 
     path("access-denied/", acces_denied, name="access-denied")
 ]
