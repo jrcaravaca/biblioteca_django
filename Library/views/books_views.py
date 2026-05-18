@@ -67,8 +67,10 @@ class BookDetailView(DetailView, FormView):
         if not hasattr(self, 'object'):
             self.object = self.get_object()
         context = super().get_context_data(**kwargs)
+        active_loans = Loan.objects.filter(user=self.request.user, returned=False)
         context['form'] = self.get_form()
-        context['loaned'] = Loan.objects.filter(user=self.request.user, book=self.object, returned=False).exists()
+        context['loaned'] = active_loans.filter(book=self.object).exists()
+        context['active_loans_count'] = active_loans.count()
 
         return context
     

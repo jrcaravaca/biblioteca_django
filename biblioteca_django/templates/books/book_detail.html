@@ -29,15 +29,19 @@
             <p><b>Puntuación de nuestros usuarios: </b> {{ book.average_rating }} </p>
             <form method="post">
                 {% csrf_token %}
-                {% if not loaned %}
+                {% if loaned %}
                     <button type="submit" name="action" value="loan" class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
                     text-white font-bold py-2 px-4 rounded text-center">
-                        Pedir Prestado
+                        Devolver Libro
+                    </button>
+                {% elif active_loans_count == 3 %}
+                    <button type="submit" class="mb-4 mt-4 cursor-pointer bg-gray-400 text-white font-bold py-2 px-4 rounded text-center" disabled>
+                        Has alcanzado 3 préstamos activos
                     </button>
                 {% else %}
                     <button type="submit" name="action" value="loan" class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
                     text-white font-bold py-2 px-4 rounded text-center">
-                        Devolver Libro
+                        Pedir Prestado
                     </button>
                 {% endif %}
 
