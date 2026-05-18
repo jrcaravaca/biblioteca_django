@@ -21,4 +21,8 @@ class UserProfile(models.Model):
     def __str__(self): 
         return self.user.username
     
-    
+    @property
+    def image_url(self): 
+        if self.profile_picture and hasattr(self.profile_picture, 'url'): 
+            return self.profile_picture.url
+        return '/static/user/img/default-user.avif'

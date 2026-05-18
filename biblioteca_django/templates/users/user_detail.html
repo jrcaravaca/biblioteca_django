@@ -1,0 +1,51 @@
+{% extends "general/layout.html" %}
+{% load static %}
+{% load is_staff %}
+{% load crispy_forms_tags %}
+{% block head_title %} Biblioteca - Mi perfil {% endblock %}
+
+{% block page_content %}
+    <h2 class="text-[2rem] text-center pb-4 pt-4"> Mi Perfil</h2>
+    <section class="flex justify-center items-center gap-4">
+        {% if profile.profile_picture %}
+            <img class="w-48 h-48 rounded-full object-cover border border-gray-200 shadow-sm" src="{{ profile.profile_picture.url }}" alt="{{ profile.user.username }}">
+        {% else %}
+            <img class="w-48 h-48 rounded-full object-cover border border-gray-200 shadow-sm" src="{% static 'user/img/default-user.avif' %}" alt="Imagen de perfil predeterminada">
+        {% endif %}
+            
+        <article>
+            <hr>
+                <p><strong>Nombre de usuario:</strong> {{ profile.user.username }}</p>
+                <p><strong>Nombre completo:</strong> {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+                <p><strong>Correo electrónico:</strong> {{ profile.user.email }}</p>
+                <p><strong>Fecha de Registro:</strong> {{ profile.register_date }}</p>
+                
+            <hr>
+            </article>
+    </section>
+
+    <section class="text-center text-lg">
+        <div class="grid grid-cols-3 gap-5 mx-auto mt-5">
+        {% for loan in active_loans %}
+        <article class="flex flex-col gap-4 items-center">
+         <a href="{% url "book-detail" loan.book.pk %}">
+            <img class="w-32 h-48" src="{{ loan.book.frontpage.url }}" alt="{{ loan.book.title }}">
+         </a>
+         <a href="{% url "book-detail" loan.book.pk %}">
+            <p>{{ loan.book.title }}</p>
+         </a>
+         </article>
+        {% empty %}
+            <p class="text-center">No tienes libros activos en préstamo.</p>
+        {% endfor %}
+        </div>
+
+    </section>  
+
+    {% comment %} {% if request.user|has_group:"staff" %}
+    <section id="staff">
+        
+    </section>
+    {% endif %} {% endcomment %}
+        
+{% endblock %}
