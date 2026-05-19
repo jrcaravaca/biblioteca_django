@@ -1,0 +1,47 @@
+{% extends "general/layout.html" %} 
+{% block head_title %} Biblioteca - Registro {% endblock %} 
+
+{% block page_content %}
+<h2 class="text-xl text-center pb-4">Registro de préstamos</h2>
+
+{% comment %} CONTENIDO DE LA PÁGINA {% endcomment %}
+
+  <section class="w-full overflow-x-auto shadow-md sm:rounded-lg flex items-center justify-center flex-col"> 
+      <table class="w-full, text-left text-sm ">
+        <thead class="bg-gray-100 uppercasae text-gray-700">
+          <tr>
+            <th class="px-6 py-4">Tipo</th>
+            <th class="px-6 py-4">Libro</th>
+            <th class="px-6 py-4">Usuario</th>
+            <th class="px-6 py-4">Fecha
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg">
+          {% for loan in loans %}
+            {% if loan.return_date %}
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 font-medium text-gray-900">Devolución</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.book.title }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.user.username }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.return_date}}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td class="px-6 py-4 font-medium text-gray-900">Préstamo</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.book.title }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.user.username }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.loan_date }}</td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% comment "" %} PAGINACION {% endcomment %}
+    
+</div>
+    
+  </section>
+
+{% endblock %}
+

@@ -7,10 +7,8 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django import forms
 
 from ..models.book_model import Book
-from ..models.author_model import Author
 from ..models.loan_model import Loan
 from ..forms import ReviewCreateForm, BookCreateForm
 

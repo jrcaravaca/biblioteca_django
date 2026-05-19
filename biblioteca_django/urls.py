@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
-from .views import HomeView, LoginView, RegisterView, logout_view, acces_denied
+from .views import HomeView, LoginView, RegisterView, LoanHistoryView,logout_view, acces_denied
 from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, AuthorDetailView, 
                         AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
                         AuthorDeleteView, BookUpdateView, AuthorUpdateView)
@@ -20,6 +20,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
+    path("loan-history/", LoanHistoryView.as_view(), name="loan-history"),
 
     path("book-detail/<pk>", BookDetailView.as_view(), name="book-detail" ),
     path("book-create/", BookCreateView.as_view(), name="book-create"),

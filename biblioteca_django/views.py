@@ -1,13 +1,18 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views.generic import TemplateView, FormView, CreateView
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from Library.models.book_model import Book
 from django.contrib.auth.models import User
+from Library.models.loan_model import Loan
+from django.views.generic import ListView
 
 from .forms import LoginForm, RegistrationForm
 
@@ -52,13 +57,31 @@ class RegisterView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, "Usuario creado correctamente")
         return super(RegisterView, self).form_valid(form)
 
-   
+
+@method_decorator(login_required, name='dispatch')
+class LoanHistoryView(UserPassesTestMixin,ListView): 
+    model = Loan
+    template_name = "general/loan_history.html"
+    context_object_name = "loans"
+    paginate_by = 10
+
+    def get_queryset(self): 
+        return Loan.objects.all().select_related('user', 'book').order_by('-created_at')
+    
+    def test_func(self): 
+        return self.request.user.groups.filter(name="staff").exists()
+
+    def handle_no_permission(self):
+        return redirect('access-denied')
+    
+
 @login_required
 def logout_view(request): 
 
     logout(request)
     messages.add_message(request, messages.INFO, "Se ha cerrado sesión correctamente")
     return HttpResponseRedirect(reverse('home'))
+
 
 def acces_denied(request): 
     return render(request, "general/access_denied.html")
