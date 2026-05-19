@@ -1,0 +1,27 @@
+{% extends "general/layout.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}Biblioteca - Cambiar imagen de perfil {% endblock %}
+
+
+{% block page_content %}
+    <form action="" method="post" enctype="multipart/form-data" class="pt-4 mx-auto max-w-sm text-center">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 col-sms-6">
+               {{ form.profile_picture|as_crispy_field }}
+            </div>
+            <button class="bg-pink-500 hover:bg-pink-600 transition-colors text-white font-bold py-2 px-4 rounded text-center">Cambiar Foto</button>
+            <button class="mb-4 mt-4 cursor-pointer bg-pink-500 hover:bg-pink-600 transition-colors 
+                        text-white font-bold py-2 px-4 rounded text-center">
+            <a href="{% url "user-profile" profile.pk %}" object.pk>Cancelar</a>
+        </button>
+        </div>
+    </form>
+    {{ form.media }}
+{% endblock %}
+
+<style>
+    
+</style>

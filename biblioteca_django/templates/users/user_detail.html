@@ -19,9 +19,9 @@
                 <p><strong>Nombre completo:</strong> {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
                 <p><strong>Correo electrónico:</strong> {{ profile.user.email }}</p>
                 <p><strong>Fecha de Registro:</strong> {{ profile.register_date }}</p>
-                
             <hr>
-            </article>
+                <a href="{% url "user-profile-update" profile.pk %}">Cambiar foto de perfil</a>
+        </article>
     </section>
 
     <section class="text-center text-lg">
