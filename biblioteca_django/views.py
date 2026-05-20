@@ -21,8 +21,18 @@ class HomeView(TemplateView):
     template_name = 'general/home.html'
 
     def get_context_data(self, **kwargs):
+        q = self.request.GET.get('q')
         context =  super().get_context_data(**kwargs)
-        books = Book.objects.order_by('-id')[:6]
+        qs = Book.objects.order_by('-id')
+        if q:
+            books = qs.filter(title__icontains=q)
+            if books.count() == 0:
+                books = qs.filter(author__name__icontains=q)
+                if books.count() == 0:
+                    books = qs.filter(author__last_name__icontains=q)
+        else: 
+            books = Book.objects.order_by('-id')[:6]
+        
         context['books'] = books
         
         return context
