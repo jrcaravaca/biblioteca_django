@@ -8,9 +8,11 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.mixins import UserPassesTestMixin
 
+
 from ..models.book_model import Book
 from ..models.loan_model import Loan
 from ..forms import ReviewCreateForm, BookCreateForm
+from ..constants import GENRE_CHOICES
 
 
 
@@ -100,8 +102,21 @@ class BookCreateView(UserPassesTestMixin, CreateView):
 class BookListView(ListView):
     model = Book
     template_name = "books/book_list.html"
-    context_object_name = "books"
+    
     paginate_by = 10
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        qs = Book.objects.all()
+        context['genres'] = GENRE_CHOICES.values()
+
+        if self.request.GET.get('genre-search'):
+            genre = self.request.GET.get('genre-search')
+            context['books'] = qs.filter(genre=genre)
+        else: 
+            context['books'] = qs
+
+        return context
 
     
 @method_decorator(login_required, name='dispatch')

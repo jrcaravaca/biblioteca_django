@@ -5,21 +5,21 @@
 <h2 class="text-xl text-center pb-4">¡Bienvenido a la Biblioteca!</h2>
 {% comment %} BUSCADOR {% endcomment %}
   <form action="" method="get" class="relative flex w-full max-w-sm">
-    {% csrf_token %}
-     <input
-    name="q"
-    type="text"
-    placeholder="Titulo"
-    class=" w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 pr-24 text-sm focus:border-pink-500 focus:outline-none"
-    required
-  />
-
-  <button
-    type="submit"
-    class="absolute right-1 top-1 rounded bg-pink-500 px-5 py-2 mr-1 text-xs font-bold uppercase text-white hover:bg-pink-600 transition-colors"
-    >
-        Buscar
-  </button>
+      {% csrf_token %}
+      <input
+      name="q"
+      type="text"
+      placeholder="Titulo o Autor"
+      class=" w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 pr-24 text-sm focus:border-pink-500 focus:outline-none"
+      required
+    />
+    
+    <button
+      type="submit"
+      class="absolute right-1 top-1 rounded bg-pink-500 px-5 py-2 mr-1 text-xs font-bold uppercase text-white hover:bg-pink-600 transition-colors"
+      >
+          Buscar
+    </button>
   </form>
 
 {% comment %} CONTENIDO DE LA PÁGINA {% endcomment %}
