@@ -8,7 +8,7 @@ from Library.views import ( BookDetailView, BookCreateView, AuthorCreateView, Au
                         AuthorAutocomplete, BookListView, AuthorListView, BookDeleteView,
                         AuthorDeleteView, BookUpdateView, AuthorUpdateView)
 
-from Users.views import UserProfileDetailView, UserProfileUpdateView
+from Users.views import UserProfileDetailView, UserProfileUpdateView, UserHistoryView
 
 
 
@@ -37,6 +37,7 @@ urlpatterns = [
 
     path("user-profile/<pk>", UserProfileDetailView.as_view(), name="user-profile"),
     path("user-profile-update/<pk>", UserProfileUpdateView.as_view(), name="user-profile-update"),
+    path("user-history/<pk>", UserHistoryView.as_view(), name="user-history"),
 
     path("access-denied/", acces_denied, name="access-denied")
 ]
