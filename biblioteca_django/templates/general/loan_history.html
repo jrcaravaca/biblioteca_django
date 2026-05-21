@@ -5,6 +5,28 @@
 <h2 class="text-xl text-center pb-4">Registro de préstamos</h2>
 
 {% comment %} CONTENIDO DE LA PÁGINA {% endcomment %}
+   <form action="" method="get" class="relative flex w-full max-w-sm pb-4 gap-2 flex items-center">
+      {% csrf_token %}
+      <input
+      name="search_user"
+      type="text"
+      placeholder="Nombre de usuario"
+      class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-pink-500 focus:outline-none"
+      required
+    />
+    
+    <button
+      type="submit"
+      class="rounded bg-pink-500 px-5 py-2.5 text-xs font-bold uppercase text-white hover:bg-pink-600 transition-colors">
+          Buscar
+    </button>
+    {% if search_user %}
+        <a href="?" class="text-sm text-gray-500 hover:text-pink-500 underline whitespace-nowrap">
+            Limpiar
+        </a>
+    {% endif %}
+  </form>
+
 
   <section class="w-full overflow-x-auto shadow-md sm:rounded-lg flex items-center justify-center flex-col"> 
       <table class="w-full, text-left text-sm ">

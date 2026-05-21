@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from Library.models.book_model import Book
 from django.contrib.auth.models import User
@@ -25,16 +26,15 @@ class HomeView(TemplateView):
         context =  super().get_context_data(**kwargs)
         qs = Book.objects.order_by('-id')
         if q:
-            books = qs.filter(title__icontains=q)
-            if books.count() == 0:
-                books = qs.filter(author__name__icontains=q)
-                if books.count() == 0:
-                    books = qs.filter(author__last_name__icontains=q)
+            books = qs.filter(
+                Q(title__icontains=q) | Q(author__name__icontains=q) | Q(author__last_name__icontains=q)
+            )
         else: 
             books = Book.objects.order_by('-id')[:6]
         
         context['books'] = books
-        
+        context['q'] = q
+
         return context
     
 
@@ -73,10 +73,22 @@ class LoanHistoryView(UserPassesTestMixin,ListView):
     model = Loan
     template_name = "general/loan_history.html"
     context_object_name = "loans"
-    paginate_by = 10
+    paginate_by = 20
 
     def get_queryset(self): 
-        return Loan.objects.all().select_related('user', 'book').order_by('-created_at')
+        queryset =  Loan.objects.all().select_related('user', 'book').order_by('-created_at')
+
+        user_name = self.request.GET.get('search_user')
+
+        if user_name:
+            queryset = queryset.filter(user__username__icontains=user_name)
+
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['search_user'] = self.request.GET.get('search_user')
+        return context
     
     def test_func(self): 
         return self.request.user.groups.filter(name="staff").exists()
