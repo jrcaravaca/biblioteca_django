@@ -1,5 +1,5 @@
 from .models import UserProfile
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
@@ -15,6 +15,7 @@ class UserProfileDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["active_loans"] = self.object.user.loans.filter(returned=False).select_related("book")
+        context["loans"] = self.object.user.loans.select_related("book").order_by("-created_at")[:10]
         return context
 
 

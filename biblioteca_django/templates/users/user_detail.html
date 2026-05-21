@@ -25,7 +25,7 @@
     </section>
 
     <section class="text-center text-lg">
-        <div class="grid grid-cols-3 gap-5 mx-auto mt-5">
+        <div class="grid grid-cols-3 gap-5 mx-auto mt-5 ">
         {% for loan in active_loans %}
         <article class="flex flex-col gap-4 items-center">
          <a href="{% url "book-detail" loan.book.pk %}">
@@ -36,16 +36,44 @@
          </a>
          </article>
         {% empty %}
-            <p class="text-center">No tienes libros activos en préstamo.</p>
+            <p class="text-center col-2">No tienes libros aún.</p>
         {% endfor %}
         </div>
 
     </section>  
 
-    {% comment %} {% if request.user|has_group:"staff" %}
-    <section id="staff">
-        
+    <section class="mt-10 text-center">
+        <h3 class="text-lg text-center pb-4 pt-4">Mi historial</h3>
+        <table class="w-full, text-left text-sm ">
+        <thead class="bg-gray-100 uppercase text-gray-700">
+          <tr>
+            <th class="px-6 py-4">Estado</th>
+            <th class="px-6 py-4">Libro</th>
+            <th class="px-6 py-4">Fecha Prestamo</th>
+            <th class="px-6 py-4">Fecha Devolución</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg">
+          {% for loan in loans %}
+          {% if loan.return_date %}
+            <tr class="bg-green-300 hover:bg-green-500 transition-colors">
+              <td class="px-6 py-4 font-medium text-gray-900">Devuelto</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.book.title }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.loan_date}}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.return_date}}</td>
+            </tr>
+            {% else %}
+            <tr class="bg-red-300 hover:bg-red-500 transition-colors">
+              <td class="px-6 py-4 font-medium text-gray-900">Prestado</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.book.title }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{ loan.loan_date }}</td>
+              <td class="px-6 py-4 font-medium text-gray-900"> - </td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="" class="text-center underline"> Ver historial completo </a>
     </section>
-    {% endif %} {% endcomment %}
         
 {% endblock %}
