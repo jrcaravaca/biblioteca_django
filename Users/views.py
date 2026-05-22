@@ -39,5 +39,5 @@ class UserHistoryView(ListView):
     paginate_by = 15
 
     def get_queryset(self): 
-        return Loan.objects.all().select_related('user', 'book').order_by('-created_at')
+        return Loan.objects.all().select_related('user', 'book').filter(user=self.request.user).order_by('-created_at')
     
