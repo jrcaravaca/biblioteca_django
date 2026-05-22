@@ -1,0 +1,7 @@
+UPER USER: admin
+MAIL: admin@admin.com
+PASS: admin1234
+
+NORMAL USER
+USERNAME: Peter_stone
+PASSWORD: Usuariopeter12345@
