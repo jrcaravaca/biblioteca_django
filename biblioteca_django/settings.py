@@ -134,3 +134,5 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 
 # AUTHENTICATION
 LOGIN_URL = 'login'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
